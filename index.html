@@ -3,305 +3,277 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LINER Health — 의료/건강 AI 검색</title>
+  <title>LINER Health — 출처 기반 의료 AI 검색</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- ========== LANDING PAGE ========== -->
-  <div id="landing-page" class="page active">
-    <nav class="nav">
-      <div class="nav-inner">
-        <div class="logo"><span class="logo-mark">L</span><span class="logo-text">LINER</span><span class="logo-sub">Health</span></div>
-        <div class="nav-right">
-          <div class="mode-switch">
-            <button class="mode-btn active" data-type="general">일반</button>
-            <button class="mode-btn" data-type="scholar">Scholar</button>
+  <!-- ===== LANDING ===== -->
+  <div id="page-landing" class="page active">
+    <div class="landing-wrap">
+      <div class="brand">
+        <span class="brand-mark">L</span>
+        <span class="brand-name">LINER <em>Health</em></span>
+      </div>
+      <h1 class="landing-h">의료 질문, <span class="g-accent">출처와 함께</span> 답합니다</h1>
+      <p class="landing-sub">460M+ 학술 논문 기반 AI &middot; 문장별 출처 인용 &middot; 95.3% 정확도</p>
+
+      <div class="search-area">
+        <div class="search-bar" id="landing-search-bar">
+          <svg class="sb-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="landing-input" placeholder="의료/건강 관련 질문을 입력하세요...">
+          <div class="sb-controls">
+            <div class="mode-pills">
+              <button class="pill active" data-mode="general">일반</button>
+              <button class="pill" data-mode="scholar">Scholar</button>
+            </div>
+            <button class="sb-send" id="landing-send">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
           </div>
         </div>
       </div>
-    </nav>
 
-    <section class="hero">
-      <h1 class="hero-title">의료 질문,<br><span class="hero-accent">출처와 함께</span> 답합니다</h1>
-      <p class="hero-desc">460M+ 학술 논문 기반 AI가 문장마다 출처를 달아드립니다</p>
+      <div class="chips-area">
+        <button class="qchip" data-q="당뇨병의 초기 증상과 예방법">당뇨병 초기 증상</button>
+        <button class="qchip" data-q="고혈압 원인과 메커니즘">고혈압 메커니즘</button>
+        <button class="qchip" data-q="niacinamide 피부 효능">니아신아마이드 효능</button>
+        <button class="qchip" data-q="오메가3 영양제 추천">오메가3 추천</button>
+        <button class="qchip" data-q="뇌종양에 대해 설명해줘">뇌종양 설명</button>
+      </div>
 
-      <div class="search-wrap">
-        <div class="search-box">
-          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="search-input" placeholder="의료/건강 관련 질문을 입력하세요...">
-          <button id="search-btn" class="search-submit">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      <div class="landing-cats">
+        <button class="lcat" data-q="질병·증상"><span>&#129657;</span>질병·증상</button>
+        <button class="lcat" data-q="암·종양"><span>&#128300;</span>암·종양</button>
+        <button class="lcat" data-q="내과·만성질환"><span>&#129728;</span>내과·만성질환</button>
+        <button class="lcat" data-q="정신건강"><span>&#129504;</span>정신건강</button>
+        <button class="lcat" data-q="약물·치료"><span>&#128138;</span>약물·치료</button>
+        <button class="lcat" data-q="감염성 질환"><span>&#129440;</span>감염성질환</button>
+        <button class="lcat" data-q="정형외과·재활"><span>&#129469;</span>정형외과</button>
+        <button class="lcat" data-q="영양·건강관리"><span>&#129388;</span>영양관리</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== APP (Answer page) ===== -->
+  <div id="page-app" class="page">
+    <!-- LEFT SIDEBAR: History -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-header">
+        <div class="brand brand-sm" id="go-home">
+          <span class="brand-mark sm">L</span>
+          <span class="brand-name sm">LINER <em>Health</em></span>
+        </div>
+        <button class="new-search-btn" id="new-search-btn">+ 새 검색</button>
+      </div>
+      <div class="sb-section-label">최근 검색</div>
+      <div class="history-list" id="history-list">
+        <div class="hist-item active">당뇨병의 초기 증상과 예방법</div>
+        <div class="hist-item">고혈압 원인 메커니즘</div>
+        <div class="hist-item">니아신아마이드 피부 효능</div>
+        <div class="hist-item">오메가3 영양제 추천</div>
+      </div>
+      <div class="sb-section-label">카테고리</div>
+      <div class="cat-tags">
+        <span class="cat-tag">내과</span><span class="cat-tag">감염</span><span class="cat-tag">정신건강</span><span class="cat-tag">영양</span><span class="cat-tag">암</span>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <!-- Top bar -->
+      <div class="topbar">
+        <button class="sidebar-toggle" id="sidebar-toggle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="topbar-search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="top-search-input" placeholder="새로운 질문...">
+        </div>
+        <div class="topbar-right">
+          <span class="mode-label" id="mode-label">일반 모드</span>
+        </div>
+      </div>
+
+      <!-- Answer scroll area -->
+      <div class="answer-scroll" id="answer-scroll">
+        <div class="answer-container" id="answer-container">
+
+          <!-- Query -->
+          <div class="user-query" id="user-query">당뇨병의 초기 증상과 예방법</div>
+
+          <!-- Sources bar (Perplexity-style) -->
+          <div class="sources-bar">
+            <div class="sources-label">Sources</div>
+            <div class="sources-cards">
+              <div class="src-card" data-ref="1">
+                <div class="src-favicon">NEJM</div>
+                <div class="src-title">Prevention of Type 2 DM by Lifestyle Changes</div>
+                <div class="src-meta">Tuomilehto J &middot; IF 176.1</div>
+              </div>
+              <div class="src-card" data-ref="2">
+                <div class="src-favicon">ADA</div>
+                <div class="src-title">Standards of Care in Diabetes 2024</div>
+                <div class="src-meta">Diabetes Care &middot; IF 16.2</div>
+              </div>
+              <div class="src-card" data-ref="3">
+                <div class="src-favicon">KDA</div>
+                <div class="src-title">대한당뇨병학회 진료지침 2023</div>
+                <div class="src-meta">Korean Diabetes Association</div>
+              </div>
+              <div class="src-card" data-ref="4">
+                <div class="src-favicon">WHO</div>
+                <div class="src-title">Global Report on Diabetes</div>
+                <div class="src-meta">World Health Organization</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reasoning toggle -->
+          <details class="reasoning-block">
+            <summary class="reasoning-toggle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              추론 과정 보기
+            </summary>
+            <div class="reasoning-content">
+              <div class="reason-step">1. "당뇨병 초기 증상"에 대한 신뢰할 수 있는 학술 자료 검색</div>
+              <div class="reason-step">2. ADA 진료지침(2024)과 대한당뇨병학회 가이드라인 우선 참조</div>
+              <div class="reason-step">3. 예방 관련 RCT 논문(Finnish DPS, DPP)에서 근거 수집</div>
+              <div class="reason-step">4. 일반인 대상 — 전문 용어를 최소화하고 실용적 정보 중심으로 구성</div>
+            </div>
+          </details>
+
+          <!-- AI Answer: flowing document style -->
+          <div class="ai-answer" id="ai-answer">
+
+            <h2>3줄 요약</h2>
+            <div class="highlight-box">
+              <p><strong>당뇨병(Diabetes Mellitus)</strong>은 인슐린 분비 또는 작용 이상으로 혈당이 만성적으로 높아지는 대사 질환으로, 한국 성인 6명 중 1명이 영향을 받고 있습니다.<sup class="cite" data-ref="1">1</sup><sup class="cite" data-ref="3">3</sup></p>
+              <p>초기 증상으로는 <strong>다음(多飮), 다뇨(多尿), 다식(多食)</strong>의 3다 증상과 함께 피로감, 체중 감소, 시야 흐림 등이 나타나며, 초기에는 증상이 미미할 수 있습니다.<sup class="cite" data-ref="2">2</sup></p>
+              <p>규칙적인 운동, 식이 조절, 체중 관리를 통해 <strong>제2형 당뇨병의 58%까지 예방</strong>이 가능하며, 조기 발견을 위한 정기 검진이 중요합니다.<sup class="cite" data-ref="1">1</sup></p>
+            </div>
+
+            <h2>원인·메커니즘</h2>
+            <p>제2형 당뇨병은 <strong>인슐린 저항성</strong>과 베타세포의 점진적 기능 저하가 복합적으로 작용하여 발생합니다.<sup class="cite" data-ref="2">2</sup> 비만, 유전적 소인, 운동 부족, 스트레스가 주요 위험인자로 작용하며, 이로 인해 근육·간·지방조직에서 인슐린 감수성이 저하됩니다.<sup class="cite" data-ref="1">1</sup></p>
+
+            <div class="flow-diagram">
+              <div class="fd-node fd-a">유발 요인<small>비만, 유전, 스트레스</small></div>
+              <div class="fd-arrow">&rarr;</div>
+              <div class="fd-node fd-b">인슐린 저항성<small>근육·간·지방 감수성 저하</small></div>
+              <div class="fd-arrow">&rarr;</div>
+              <div class="fd-node fd-c">고혈당 지속<small>베타세포 기능 저하</small></div>
+              <div class="fd-arrow">&rarr;</div>
+              <div class="fd-node fd-d">합병증<small>망막·신장·신경병증</small></div>
+            </div>
+
+            <p>제1형 당뇨병은 자가면역 반응으로 췌장 베타세포가 파괴되어 인슐린이 절대적으로 부족한 상태이며, 전체 당뇨의 5~10%를 차지합니다.<sup class="cite" data-ref="2">2</sup></p>
+
+            <div class="expert-block" id="expert-block">
+              <div class="expert-label">Scholar</div>
+              <p>IRS-1/PI3K/Akt 신호전달 경로의 이상으로 GLUT4 전위가 감소하고, TNF-α, IL-6 등 염증성 사이토카인이 인슐린 수용체 기질의 세린 인산화를 촉진하여 신호를 차단합니다.<sup class="cite" data-ref="1">1</sup></p>
+            </div>
+
+            <h2>증상</h2>
+            <p>당뇨병의 대표적인 초기 증상은 아래와 같습니다.<sup class="cite" data-ref="2">2</sup><sup class="cite" data-ref="3">3</sup></p>
+
+            <div class="sym-table">
+              <div class="sym-row major"><span class="sym-badge major-b">주요</span><strong>다음(多飮)</strong> — 비정상적으로 물을 많이 마시게 됨</div>
+              <div class="sym-row major"><span class="sym-badge major-b">주요</span><strong>다뇨(多尿)</strong> — 소변 횟수와 양이 증가</div>
+              <div class="sym-row major"><span class="sym-badge major-b">주요</span><strong>다식(多食)</strong> — 배고픔이 자주 느껴짐</div>
+              <div class="sym-row"><span class="sym-badge">동반</span><strong>피로감</strong> — 만성적인 무기력함과 졸음</div>
+              <div class="sym-row"><span class="sym-badge">동반</span><strong>체중 감소</strong> — 식사량 증가에도 체중이 빠짐</div>
+              <div class="sym-row"><span class="sym-badge">동반</span><strong>시야 흐림</strong> — 눈이 침침해지고 시력 저하</div>
+            </div>
+
+            <div class="callout warn">초기 당뇨병은 증상이 없는 경우가 많습니다. 위험인자가 있다면 <strong>정기 혈당검사</strong>를 권장합니다.<sup class="cite" data-ref="3">3</sup></div>
+
+            <h2>치료법·해결방안</h2>
+            <h3>생활습관 관리</h3>
+            <ul>
+              <li><strong>식이 조절:</strong> 저GI 식품 위주, 탄수화물 45-65%, 단백질 15-20%, 지방 20-35%<sup class="cite" data-ref="2">2</sup></li>
+              <li><strong>규칙적 운동:</strong> 주 150분 이상 중강도 유산소 + 주 2~3회 저항 운동<sup class="cite" data-ref="1">1</sup></li>
+              <li><strong>체중 관리:</strong> 과체중 시 5~7% 감량만으로 혈당 조절 효과<sup class="cite" data-ref="1">1</sup></li>
+            </ul>
+
+            <h3>약물치료</h3>
+            <table class="med-tbl">
+              <thead><tr><th>분류</th><th>대표약물</th><th>기전</th><th>특징</th></tr></thead>
+              <tbody>
+                <tr><td>비구아나이드</td><td>메트포르민</td><td>간 포도당 억제</td><td>1차 약제<sup class="cite" data-ref="2">2</sup></td></tr>
+                <tr><td>SGLT2 억제제</td><td>다파글리플로진</td><td>신장 재흡수 억제</td><td>심혈관 보호</td></tr>
+                <tr><td>GLP-1 RA</td><td>세마글루타이드</td><td>인슐린 촉진+식욕 억제</td><td>체중 감소<sup class="cite" data-ref="2">2</sup></td></tr>
+              </tbody>
+            </table>
+
+            <h3>부작용</h3>
+            <ul>
+              <li><strong>메트포르민:</strong> 소화기 장애(설사, 구역), 드물게 젖산산증</li>
+              <li><strong>설폰요소제:</strong> 저혈당, 체중 증가</li>
+              <li><strong>SGLT2 억제제:</strong> 비뇨생식기 감염, 드물게 케톤산증</li>
+            </ul>
+
+            <h2>예방방안</h2>
+            <p>핀란드 당뇨예방연구(DPS)에서 생활습관 교정군은 대조군 대비 <strong>당뇨 발병률이 58% 감소</strong>했습니다.<sup class="cite" data-ref="1">1</sup></p>
+            <ul>
+              <li>주 150분+ 중강도 유산소 운동</li>
+              <li>통곡물·채소·저GI 식단</li>
+              <li>BMI 23 이하 유지 (한국 기준)<sup class="cite" data-ref="3">3</sup></li>
+              <li>하루 7~8시간 규칙적 수면</li>
+            </ul>
+
+            <h3>도움이 되는 영양제</h3>
+            <div class="supp-list">
+              <div class="supp"><strong>크롬</strong><span>인슐린 감수성 향상 &middot; 200~1000mcg/일</span><span class="ev ev-mid">근거 중간</span></div>
+              <div class="supp"><strong>알파리포산</strong><span>항산화, 신경병증 개선 &middot; 300~600mg/일</span><span class="ev ev-hi">근거 높음<sup class="cite" data-ref="4">4</sup></span></div>
+              <div class="supp"><strong>비타민 D</strong><span>인슐린 분비 조절 &middot; 1000~2000IU/일</span><span class="ev ev-mid">근거 중간</span></div>
+              <div class="supp"><strong>마그네슘</strong><span>혈당 조절 보조 &middot; 250~350mg/일</span><span class="ev ev-mid">근거 중간</span></div>
+            </div>
+
+            <h2>참고문헌</h2>
+            <div class="refs">
+              <div class="ref" id="ref-1"><span class="rn">1</span><div><strong>Prevention of Type 2 Diabetes Mellitus by Changes in Lifestyle</strong><br><span class="rm">Tuomilehto J, et al. &middot; N Engl J Med 2001 &middot; <em>IF 176.1</em></span></div></div>
+              <div class="ref" id="ref-2"><span class="rn">2</span><div><strong>Standards of Care in Diabetes — 2024</strong><br><span class="rm">American Diabetes Association &middot; Diabetes Care &middot; <em>IF 16.2</em></span></div></div>
+              <div class="ref" id="ref-3"><span class="rn">3</span><div><strong>대한당뇨병학회 진료지침 2023</strong><br><span class="rm">Korean Diabetes Association</span></div></div>
+              <div class="ref" id="ref-4"><span class="rn">4</span><div><strong>Global Report on Diabetes</strong><br><span class="rm">World Health Organization, 2024</span></div></div>
+            </div>
+          </div>
+
+          <!-- Follow-up -->
+          <div class="followup-bar">
+            <div class="fu-label">다음 검색</div>
+            <div class="fu-chips">
+              <button class="fu-chip">공복혈당 검사 기준은?</button>
+              <button class="fu-chip">당화혈색소(HbA1c)란?</button>
+              <button class="fu-chip">내분비내과 추천 병원</button>
+              <button class="fu-chip">당뇨 약 보험 적용?</button>
+              <button class="fu-chip">합병증은 언제부터?</button>
+              <button class="fu-chip">당뇨에 좋은 영양제 조합</button>
+            </div>
+          </div>
+
+          <div class="disclaimer">본 정보는 의학 정보 제공 목적이며, 전문 의료 상담을 대체하지 않습니다.</div>
+        </div>
+      </div>
+
+      <!-- Bottom re-search bar -->
+      <div class="bottom-bar">
+        <div class="bottom-search">
+          <input type="text" id="bottom-input" placeholder="후속 질문을 입력하세요...">
+          <button class="bottom-send" id="bottom-send">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
         </div>
       </div>
+    </main>
 
-      <div class="popular">
-        <span class="popular-label">인기 검색</span>
-        <div class="popular-chips">
-          <button class="p-chip" data-q="당뇨병의 초기 증상과 예방법">당뇨병 초기 증상</button>
-          <button class="p-chip" data-q="고혈압 원인과 메커니즘">고혈압 메커니즘</button>
-          <button class="p-chip" data-q="niacinamide 피부 효능">니아신아마이드 효능</button>
-          <button class="p-chip" data-q="오메가3 영양제 추천">오메가3 추천</button>
-          <button class="p-chip" data-q="뇌종양에 대해 설명해줘">뇌종양 설명</button>
-        </div>
-      </div>
-
-      <div class="stats-row">
-        <div class="stat"><strong>18,275</strong><span>분석 쿼리</span></div>
-        <div class="stat-dot"></div>
-        <div class="stat"><strong>460M+</strong><span>학술 논문</span></div>
-        <div class="stat-dot"></div>
-        <div class="stat"><strong>95.3%</strong><span>정확도</span></div>
-      </div>
-    </section>
-
-    <section class="categories">
-      <h2 class="cat-title">의료 카테고리</h2>
-      <div class="cat-grid">
-        <button class="cat-card" data-q="질병·증상 관련 질환"><span class="cat-emoji">&#129657;</span>질병·증상<small>660건</small></button>
-        <button class="cat-card" data-q="암·종양 관련 질환"><span class="cat-emoji">&#128300;</span>암·종양<small>535건</small></button>
-        <button class="cat-card" data-q="내과·만성질환 관련"><span class="cat-emoji">&#129728;</span>내과·만성질환<small>484건</small></button>
-        <button class="cat-card" data-q="정신건강·신경과 관련"><span class="cat-emoji">&#129504;</span>정신건강·신경과<small>414건</small></button>
-        <button class="cat-card" data-q="약물·치료·검사 관련"><span class="cat-emoji">&#128138;</span>약물·치료·검사<small>409건</small></button>
-        <button class="cat-card" data-q="감염성 질환 관련"><span class="cat-emoji">&#129440;</span>감염성 질환<small>325건</small></button>
-        <button class="cat-card" data-q="정형외과·재활 관련"><span class="cat-emoji">&#129469;</span>정형외과·재활<small>253건</small></button>
-        <button class="cat-card" data-q="영양·건강관리 관련"><span class="cat-emoji">&#129388;</span>영양·건강관리<small>1위</small></button>
-      </div>
-    </section>
-  </div>
-
-  <!-- ========== ANSWER PAGE ========== -->
-  <div id="answer-page" class="page">
-    <nav class="nav">
-      <div class="nav-inner">
-        <div class="logo" id="back-home" style="cursor:pointer"><span class="logo-mark">L</span><span class="logo-text">LINER</span><span class="logo-sub">Health</span></div>
-        <div class="nav-search-mini">
-          <input type="text" id="mini-search" placeholder="새로운 질문 검색...">
-        </div>
-        <div class="nav-right">
-          <span class="mode-indicator" id="mode-indicator">일반 모드</span>
-        </div>
-      </div>
-    </nav>
-
-    <div class="answer-layout">
-      <!-- LEFT: TOC -->
-      <aside class="toc" id="toc">
-        <div class="toc-label">목차</div>
-        <a href="#s-summary" class="toc-item active" data-s="s-summary">3줄 요약</a>
-        <a href="#s-cause" class="toc-item" data-s="s-cause">원인·메커니즘</a>
-        <a href="#s-symptoms" class="toc-item" data-s="s-symptoms">증상</a>
-        <a href="#s-treatment" class="toc-item" data-s="s-treatment">치료법·해결방안</a>
-        <a href="#s-prevention" class="toc-item" data-s="s-prevention">예방방안</a>
-        <a href="#s-refs" class="toc-item" data-s="s-refs">논문·참고문헌</a>
-        <a href="#s-followup" class="toc-item" data-s="s-followup">후속 질문</a>
-        <div class="toc-sep"></div>
-        <div class="toc-meta">
-          <div class="tm"><span class="tm-k">카테고리</span><span class="tm-v">내과·만성질환</span></div>
-          <div class="tm"><span class="tm-k">인텐트</span><span class="tm-v">질문_진단_증상확인</span></div>
-          <div class="tm"><span class="tm-k">신뢰도</span><div class="conf-bar"><div class="conf-fill" style="width:85%"></div></div></div>
-        </div>
-      </aside>
-
-      <!-- CENTER: ANSWER -->
-      <main class="answer-main">
-        <div class="q-box">
-          <h1 class="q-text" id="query-text">당뇨병의 초기 증상과 예방법</h1>
-          <div class="q-tags">
-            <span class="q-tag t-cat">내과·만성질환</span>
-            <span class="q-tag t-int">질문_진단_증상확인</span>
-          </div>
-        </div>
-
-        <!-- 1. 3줄 요약 -->
-        <section class="section" id="s-summary">
-          <div class="sec-head">
-            <h2>3줄 요약</h2>
-            <span class="sec-badge">핵심</span>
-          </div>
-          <div class="summary-box">
-            <div class="sum-line">
-              <span class="sum-n">1</span>
-              <p><strong>당뇨병(Diabetes Mellitus)</strong>은 인슐린 분비 또는 작용 이상으로 혈당이 만성적으로 높아지는 대사 질환으로, 한국 성인 6명 중 1명이 영향을 받고 있습니다.<a class="cite" href="#ref1" data-ref="1">[1]</a></p>
-            </div>
-            <div class="sum-line">
-              <span class="sum-n">2</span>
-              <p>초기 증상으로는 <strong>다음(多飮), 다뇨(多尿), 다식(多食)</strong>의 3다 증상과 함께 피로감, 체중 감소, 시야 흐림 등이 나타나며, 초기에는 증상이 미미할 수 있습니다.<a class="cite" href="#ref2" data-ref="2">[2]</a></p>
-            </div>
-            <div class="sum-line">
-              <span class="sum-n">3</span>
-              <p>규칙적인 운동, 식이 조절, 체중 관리를 통해 <strong>제2형 당뇨병의 58%까지 예방</strong>이 가능하며, 조기 발견을 위한 정기 검진이 중요합니다.<a class="cite" href="#ref1" data-ref="1">[1]</a><a class="cite" href="#ref3" data-ref="3">[3]</a></p>
-            </div>
-          </div>
-          <div class="quick-stats">
-            <div class="qs"><strong>6명 중 1명</strong><span>한국 성인 유병률</span></div>
-            <div class="qs"><strong>58%</strong><span>생활습관 예방률</span></div>
-            <div class="qs"><strong>126mg/dL</strong><span>공복혈당 기준</span></div>
-          </div>
-        </section>
-
-        <!-- 2. 원인·메커니즘 -->
-        <section class="section" id="s-cause">
-          <div class="sec-head">
-            <h2>원인·메커니즘</h2>
-            <button class="toggle-btn" data-target="cause-detail"><span>상세 보기</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg></button>
-          </div>
-          <div class="mech-flow">
-            <div class="mech-node n-trigger"><div class="mn-title">유발 요인</div><div class="mn-desc">비만, 유전, 스트레스, 운동 부족</div></div>
-            <div class="mech-arr"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-            <div class="mech-node n-process"><div class="mn-title">병태생리</div><div class="mn-desc">인슐린 저항성 증가<a class="cite" href="#ref2" data-ref="2">[2]</a></div></div>
-            <div class="mech-arr"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-            <div class="mech-node n-result"><div class="mn-title">결과</div><div class="mn-desc">고혈당 지속, 대사 이상</div></div>
-            <div class="mech-arr"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-            <div class="mech-node n-comp"><div class="mn-title">합병증</div><div class="mn-desc">망막·신장·신경병증<a class="cite" href="#ref1" data-ref="1">[1]</a></div></div>
-          </div>
-          <div class="collapse" id="cause-detail">
-            <div class="detail-cards">
-              <div class="d-card"><h4>제1형 당뇨병</h4><p>자가면역 반응으로 췌장 베타세포 파괴. 전체 5~10%.<a class="cite" href="#ref2" data-ref="2">[2]</a></p></div>
-              <div class="d-card"><h4>제2형 당뇨병</h4><p>인슐린 저항성 + 분비 부전. 비만, 유전 관련. 전체 90~95%.<a class="cite" href="#ref2" data-ref="2">[2]</a></p></div>
-              <div class="d-card expert-card"><h4>분자 메커니즘 <span class="expert-tag">Scholar</span></h4><p>IRS-1/PI3K/Akt 경로 이상 → GLUT4 전위 감소. TNF-α, IL-6가 인슐린 수용체 기질 세린 인산화를 촉진.<a class="cite" href="#ref1" data-ref="1">[1]</a></p></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 3. 증상 -->
-        <section class="section" id="s-symptoms">
-          <div class="sec-head"><h2>증상</h2></div>
-          <div class="sym-grid">
-            <div class="sym-card major"><div class="sym-level">주요</div><strong>다음 (多飮)</strong><p>비정상적으로 물을 많이 마시게 됨</p></div>
-            <div class="sym-card major"><div class="sym-level">주요</div><strong>다뇨 (多尿)</strong><p>소변 횟수와 양 증가</p></div>
-            <div class="sym-card major"><div class="sym-level">주요</div><strong>다식 (多食)</strong><p>배고픔이 자주 느껴짐</p></div>
-            <div class="sym-card minor"><div class="sym-level">동반</div><strong>피로감</strong><p>만성 무기력·졸음</p></div>
-            <div class="sym-card minor"><div class="sym-level">동반</div><strong>체중 감소</strong><p>식사 증가에도 체중 감소</p></div>
-            <div class="sym-card minor"><div class="sym-level">동반</div><strong>시야 흐림</strong><p>시력 저하</p></div>
-          </div>
-          <div class="warn-box"><p>초기 당뇨병은 증상이 없는 경우가 많습니다. 위험인자가 있다면 <strong>정기 혈당검사</strong>를 권장합니다.<a class="cite" href="#ref3" data-ref="3">[3]</a></p></div>
-        </section>
-
-        <!-- 4. 치료법 -->
-        <section class="section" id="s-treatment">
-          <div class="sec-head"><h2>치료법·해결방안</h2></div>
-          <div class="tabs">
-            <button class="tab active" data-tab="t-life">생활습관</button>
-            <button class="tab" data-tab="t-med">약물치료</button>
-            <button class="tab" data-tab="t-side">부작용</button>
-          </div>
-          <div class="tab-body" id="t-life">
-            <div class="tx-item"><span class="tx-pri high">필수</span><div><h4>식이 조절</h4><p>저GI 식품 위주. 탄수화물 45-65%, 단백질 15-20%, 지방 20-35%.<a class="cite" href="#ref2" data-ref="2">[2]</a></p></div></div>
-            <div class="tx-item"><span class="tx-pri high">필수</span><div><h4>규칙적 운동</h4><p>주 150분+ 중강도 유산소 + 주 2~3회 저항 운동.<a class="cite" href="#ref1" data-ref="1">[1]</a></p></div></div>
-            <div class="tx-item"><span class="tx-pri med">권장</span><div><h4>체중 관리</h4><p>체중 5~7% 감량으로 혈당 조절 효과.<a class="cite" href="#ref1" data-ref="1">[1]</a></p></div></div>
-          </div>
-          <div class="tab-body hidden" id="t-med">
-            <table class="med-table">
-              <thead><tr><th>분류</th><th>대표 약물</th><th>기전</th><th>특징</th></tr></thead>
-              <tbody>
-                <tr><td><strong>비구아나이드</strong></td><td>메트포르민</td><td>간 포도당 억제</td><td>1차 약제<a class="cite" href="#ref2" data-ref="2">[2]</a></td></tr>
-                <tr><td><strong>설폰요소제</strong></td><td>글리메피리드</td><td>인슐린 분비 촉진</td><td>저혈당 주의</td></tr>
-                <tr><td><strong>DPP-4 억제제</strong></td><td>시타글립틴</td><td>인크레틴 강화</td><td>체중 중립</td></tr>
-                <tr><td><strong>SGLT2 억제제</strong></td><td>다파글리플로진</td><td>신장 재흡수 억제</td><td>심혈관 보호<a class="cite" href="#ref2" data-ref="2">[2]</a></td></tr>
-                <tr><td><strong>GLP-1 RA</strong></td><td>세마글루타이드</td><td>인슐린 촉진+식욕 억제</td><td>체중 감소</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="tab-body hidden" id="t-side">
-            <div class="se-item"><strong>메트포르민</strong><span class="se-common">소화기 장애(설사, 구역)</span><span class="se-rare">드물게: 젖산산증</span></div>
-            <div class="se-item"><strong>설폰요소제</strong><span class="se-common">저혈당, 체중 증가</span></div>
-            <div class="se-item"><strong>SGLT2 억제제</strong><span class="se-common">비뇨생식기 감염</span><span class="se-rare">드물게: 케톤산증</span></div>
-          </div>
-        </section>
-
-        <!-- 5. 예방방안 -->
-        <section class="section" id="s-prevention">
-          <div class="sec-head"><h2>예방방안</h2></div>
-          <div class="prev-grid">
-            <div class="prev-card"><span class="prev-ico">&#127939;</span><strong>운동</strong><p>주 150분+ 유산소</p></div>
-            <div class="prev-card"><span class="prev-ico">&#129367;</span><strong>식이</strong><p>통곡물·저GI 식단</p></div>
-            <div class="prev-card"><span class="prev-ico">&#9878;&#65039;</span><strong>체중</strong><p>BMI 23 이하</p></div>
-            <div class="prev-card"><span class="prev-ico">&#128164;</span><strong>수면</strong><p>7~8시간 규칙 수면</p></div>
-          </div>
-          <h3 class="sub-h">도움이 되는 영양제</h3>
-          <div class="supp-grid">
-            <div class="supp-card"><strong>크롬</strong><span class="supp-fx">인슐린 감수성 향상</span><span class="supp-dose">200~1000mcg/일</span><span class="supp-ev ev-mid">근거: 중간</span></div>
-            <div class="supp-card"><strong>마그네슘</strong><span class="supp-fx">혈당 조절 보조</span><span class="supp-dose">250~350mg/일</span><span class="supp-ev ev-mid">근거: 중간</span></div>
-            <div class="supp-card"><strong>알파리포산</strong><span class="supp-fx">항산화, 신경병증 개선</span><span class="supp-dose">300~600mg/일</span><span class="supp-ev ev-high">근거: 높음<a class="cite" href="#ref1" data-ref="1">[1]</a></span></div>
-            <div class="supp-card"><strong>비타민 D</strong><span class="supp-fx">인슐린 분비 조절</span><span class="supp-dose">1000~2000IU/일</span><span class="supp-ev ev-mid">근거: 중간</span></div>
-          </div>
-        </section>
-
-        <!-- 6. 논문·참고문헌 -->
-        <section class="section" id="s-refs">
-          <div class="sec-head"><h2>논문·참고문헌</h2></div>
-          <div class="ref-list">
-            <div class="ref-item" id="ref1"><span class="ref-n">1</span><div class="ref-body"><div class="ref-title">Prevention of Type 2 Diabetes Mellitus by Changes in Lifestyle among Subjects with Impaired Glucose Tolerance</div><div class="ref-meta">Tuomilehto J, et al. &middot; N Engl J Med. 2001;344(18):1343-1350</div><div class="ref-badges"><span class="ref-badge">RCT</span><span class="ref-badge b-if">IF 176.1</span></div></div></div>
-            <div class="ref-item" id="ref2"><span class="ref-n">2</span><div class="ref-body"><div class="ref-title">Standards of Care in Diabetes — 2024</div><div class="ref-meta">American Diabetes Association &middot; Diabetes Care. 2024;47(Suppl 1)</div><div class="ref-badges"><span class="ref-badge">가이드라인</span><span class="ref-badge b-if">IF 16.2</span></div></div></div>
-            <div class="ref-item" id="ref3"><span class="ref-n">3</span><div class="ref-body"><div class="ref-title">대한당뇨병학회 진료지침 2023</div><div class="ref-meta">대한당뇨병학회 &middot; Korean Diabetes Association, 2023</div><div class="ref-badges"><span class="ref-badge">국내 가이드라인</span></div></div></div>
-          </div>
-        </section>
-
-        <!-- 7. 후속 질문 -->
-        <section class="section" id="s-followup">
-          <div class="sec-head"><h2>후속 질문</h2></div>
-          <div class="fu-grid">
-            <div class="fu-group"><div class="fu-label">검사·진단</div><div class="fu-chips"><button class="fu-chip">공복혈당 검사 기준은?</button><button class="fu-chip">당화혈색소(HbA1c) 검사란?</button><button class="fu-chip">OGTT는 언제 하나요?</button></div></div>
-            <div class="fu-group"><div class="fu-label">병원·의사</div><div class="fu-chips"><button class="fu-chip">내분비내과 추천 병원</button><button class="fu-chip">당뇨 전문 클리닉</button></div></div>
-            <div class="fu-group"><div class="fu-label">비용·보험</div><div class="fu-chips"><button class="fu-chip">당뇨 약 보험 적용?</button><button class="fu-chip">인슐린 펌프 비용</button><button class="fu-chip">CGM 보험 적용?</button></div></div>
-            <div class="fu-group"><div class="fu-label">예후·경과</div><div class="fu-chips"><button class="fu-chip">합병증은 언제부터?</button><button class="fu-chip">완치가 가능한가요?</button></div></div>
-          </div>
-        </section>
-
-        <div class="disclaimer"><p>본 정보는 의학 정보 제공 목적이며, 전문 의료 상담을 대체하지 않습니다. 구체적 진단/치료는 의료 전문가와 상담하세요.</p></div>
-      </main>
-
-      <!-- RIGHT: SOURCE PANEL (LINER style) -->
-      <aside class="source-panel" id="source-panel">
-        <div class="sp-title">Sources</div>
-        <div class="sp-list">
-          <div class="sp-item" data-ref="1">
-            <div class="sp-num">1</div>
-            <div class="sp-info">
-              <div class="sp-name">N Engl J Med</div>
-              <div class="sp-desc">Prevention of Type 2 DM by Lifestyle Changes</div>
-              <div class="sp-badges"><span class="sp-badge">RCT</span><span class="sp-badge sp-if">IF 176.1</span></div>
-            </div>
-          </div>
-          <div class="sp-item" data-ref="2">
-            <div class="sp-num">2</div>
-            <div class="sp-info">
-              <div class="sp-name">Diabetes Care 2024</div>
-              <div class="sp-desc">ADA Standards of Care in Diabetes</div>
-              <div class="sp-badges"><span class="sp-badge">가이드라인</span><span class="sp-badge sp-if">IF 16.2</span></div>
-            </div>
-          </div>
-          <div class="sp-item" data-ref="3">
-            <div class="sp-num">3</div>
-            <div class="sp-info">
-              <div class="sp-name">대한당뇨병학회</div>
-              <div class="sp-desc">진료지침 2023</div>
-              <div class="sp-badges"><span class="sp-badge">국내</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="sp-sep"></div>
-        <div class="sp-actions">
-          <button class="sp-action-btn">PDF 저장</button>
-          <button class="sp-action-btn">링크 공유</button>
-          <button class="sp-action-btn">북마크</button>
-        </div>
-        <div class="sp-sep"></div>
-        <div class="sp-title">관련 검색</div>
-        <a class="sp-related" href="#">인슐린 저항성이란?</a>
-        <a class="sp-related" href="#">당뇨 식단 가이드</a>
-        <a class="sp-related" href="#">혈당 모니터링 방법</a>
-        <a class="sp-related" href="#">당뇨 합병증 예방</a>
-        <div class="sp-sep"></div>
-        <div class="sp-feedback">
-          <button class="fb-btn fb-up">도움됨</button>
-          <button class="fb-btn fb-down">아쉬움</button>
-        </div>
-      </aside>
+    <!-- Citation Popup -->
+    <div class="cite-popup" id="cite-popup">
+      <div class="cp-header"><span class="cp-num" id="cp-num">1</span><span class="cp-close" id="cp-close">&times;</span></div>
+      <div class="cp-title" id="cp-title">Prevention of Type 2 Diabetes Mellitus</div>
+      <div class="cp-meta" id="cp-meta">Tuomilehto J, et al. &middot; N Engl J Med 2001</div>
+      <div class="cp-excerpt" id="cp-excerpt">"Lifestyle changes including moderate exercise and dietary modification reduced diabetes incidence by 58% among high-risk subjects."</div>
     </div>
   </div>
 
